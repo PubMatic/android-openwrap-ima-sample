@@ -1,0 +1,3 @@
+include ':openwrap'
+include ':app'
+rootProject.name = "OTT Sample Application"
