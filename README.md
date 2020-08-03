@@ -31,7 +31,7 @@ please ensure you are using the  actual Profile ID and Pub ID associated with yo
 ```
 
 ## More about Sample application
-Please refer [Getting Started](https://github.com/PubMatic/android-openwrap-ima-sample/wiki/Getting-Started) document to know about the Sample application and [Supported parameters and Testing](https://github.com/PubMatic/android-openwrap-ima-sample/wiki/Supported-Parameters-and-Testing).
+To learn more, see [Getting Started](https://github.com/PubMatic/android-openwrap-ima-sample/wiki/Getting-Started) and [Supported parameters and Testing](https://github.com/PubMatic/android-openwrap-ima-sample/wiki/Supported-Parameters-and-Testing).
 
 ## License
 Copyright 2006-2020, PubMatic Inc.
