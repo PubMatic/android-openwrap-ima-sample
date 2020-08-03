@@ -22,12 +22,12 @@ This sample application uses the below test placement.
 | OpenWrap Profile ID | 2486 |
 | OpenWrap Ad Unit Id | /15671365/pm_ott_video |
 
-To get the actual placement details, please refer [Support](https://github.com/PubMatic/android-openwrap-ima-sample#support).
+To get the actual placement details, please contact [support@pubmatic.com](support@pubmatic.com)
 
 ```diff
 Important Note: If you are re-using the implementation on your application, 
 please ensure you are using the  actual Profile ID and Pub ID associated with your account.
-- PubMatic assumes no financial responsibility for going live with test placement.
+- PubMatic assumes no financial responsibility for going live with test placements.
 ```
 
 ## More about Sample application
