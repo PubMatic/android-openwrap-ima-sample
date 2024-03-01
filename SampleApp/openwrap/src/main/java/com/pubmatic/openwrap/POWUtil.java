@@ -11,6 +11,7 @@ package com.pubmatic.openwrap;
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -88,10 +89,14 @@ public class POWUtil {
      * @return encoded query params
      */
     @NonNull
-    public static String generateEncodedQueryParams(@NonNull JSONObject targetingJson) {
+    public static String generateEncodedQueryParams(@NonNull JSONArray targetingJsonArray) {
         try {
             // Generate query params on blank url
-            String customParams = buildUrlWithQueryString("", targetingJson).replace("?", "");
+            String customParams = "";
+            for (int i=0; i< targetingJsonArray.length(); i++) {
+                JSONObject targetingJson = targetingJsonArray.optJSONObject(i);
+                customParams = buildUrlWithQueryString(customParams, targetingJson).replace("?", "");
+            }
             // encode and append the params to give url
             return URLEncoder.encode(customParams, "UTF-8");
         } catch (UnsupportedEncodingException e) {

@@ -29,12 +29,14 @@ import com.pubmatic.openwrap.POWConfiguration;
 import com.pubmatic.openwrap.POWUtil;
 import com.pubmatic.openwrap.models.POWApplicationInfo;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // Update the GAM url by replacing required values like Ad unit id, ad size
         final String gamAdsUrl = String.format(Constants.GAM_AD_URL, Constants.AD_UNIT_ID,
                 AD_SIZE.getFormattedAdSize());
+        //String updatedGamAdsUrl = Constants.GAM_AD_URL;
 
         // Initialise OpenWrap Ads Loader
         owAdsLoader = new POWAdsLoader(this);
@@ -74,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         // Create OpenWrap request with valid params
         POWAdRequest adRequest = new POWAdRequest(Constants.PUB_ID, Constants.PROFILE_ID,
                 Constants.AD_UNIT_ID, AD_SIZE);
+
+        adRequest.setTestEnable(true);
+
+        adRequest.setUserAgent(Util.getUserAgent(this, getString(R.string.app_name)));
 
         // Set Application details
         POWConfiguration configuration = POWConfiguration.getInstance();
@@ -85,10 +92,12 @@ public class MainActivity extends AppCompatActivity {
         owAdsLoader.setAdsLoaderListener(new POWAdLoading.AdsLoaderListener() {
             @Override
             public void onAdReceived(@NonNull POWAdResponse response) {
-                JSONObject targetingJson = response.getTargeting();
-                String updatedGamAdsUrl = gamAdsUrl;
+                JSONArray targetingJson = response.getTargeting();
+                String cust_params = "dp=0&tool=video&artid=42733721&pos=preroll&";
+                String updatedGamAdsUrl = gamAdsUrl + "&cust_params=" +  URLEncoder.encode(cust_params);
                 if (targetingJson != null) {
-                    updatedGamAdsUrl = updatedGamAdsUrl + "&cust_params=" + POWUtil.generateEncodedQueryParams(targetingJson);
+                    Log.d(TAG, "targeting json :" + targetingJson);
+                    updatedGamAdsUrl = updatedGamAdsUrl + POWUtil.generateEncodedQueryParams(targetingJson);
                 }
                 Log.d(TAG, "DFP URL :" + updatedGamAdsUrl);
                 initializeAdsLoader(updatedGamAdsUrl);
