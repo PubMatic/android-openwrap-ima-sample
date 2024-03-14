@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         // Update the GAM url by replacing required values like Ad unit id, ad size
         final String gamAdsUrl = String.format(Constants.GAM_AD_URL, Constants.AD_UNIT_ID,
                 AD_SIZE.getFormattedAdSize());
-        //String updatedGamAdsUrl = Constants.GAM_AD_URL;
 
         // Initialise OpenWrap Ads Loader
         owAdsLoader = new POWAdsLoader(this);
@@ -93,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdReceived(@NonNull POWAdResponse response) {
                 JSONArray targetingJson = response.getTargeting();
-                String cust_params = "dp=0&tool=video&artid=42733721&pos=preroll&";
-                String updatedGamAdsUrl = gamAdsUrl + "&cust_params=" +  URLEncoder.encode(cust_params);
+                String custParams = String.format("dp=%s&tool=%s&artid=%s&pos=%s",
+                        "0", "video", "42733721", "preroll");
+                String updatedGamAdsUrl = gamAdsUrl + "&cust_params=" +  URLEncoder.encode(custParams);
                 if (targetingJson != null) {
                     Log.d(TAG, "targeting json :" + targetingJson);
                     updatedGamAdsUrl = updatedGamAdsUrl + POWUtil.generateEncodedQueryParams(targetingJson);
