@@ -29,12 +29,14 @@ import com.pubmatic.openwrap.POWConfiguration;
 import com.pubmatic.openwrap.POWUtil;
 import com.pubmatic.openwrap.models.POWApplicationInfo;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
         POWAdRequest adRequest = new POWAdRequest(Constants.PUB_ID, Constants.PROFILE_ID,
                 Constants.AD_UNIT_ID, AD_SIZE);
 
+        adRequest.setTestEnable(true);
+
+        adRequest.setUserAgent(Util.getUserAgent(this, getString(R.string.app_name)));
+
         // Set Application details
         POWConfiguration configuration = POWConfiguration.getInstance();
         POWApplicationInfo applicationInfo = new POWApplicationInfo(this);
@@ -85,10 +91,13 @@ public class MainActivity extends AppCompatActivity {
         owAdsLoader.setAdsLoaderListener(new POWAdLoading.AdsLoaderListener() {
             @Override
             public void onAdReceived(@NonNull POWAdResponse response) {
-                JSONObject targetingJson = response.getTargeting();
-                String updatedGamAdsUrl = gamAdsUrl;
+                JSONArray targetingJson = response.getTargeting();
+                String custParams = String.format("dp=%s&tool=%s&artid=%s&pos=%s",
+                        "0", "video", "42733721", "preroll");
+                String updatedGamAdsUrl = gamAdsUrl + "&cust_params=" +  URLEncoder.encode(custParams);
                 if (targetingJson != null) {
-                    updatedGamAdsUrl = updatedGamAdsUrl + "&cust_params=" + POWUtil.generateEncodedQueryParams(targetingJson);
+                    Log.d(TAG, "targeting json :" + targetingJson);
+                    updatedGamAdsUrl = updatedGamAdsUrl + POWUtil.generateEncodedQueryParams(targetingJson);
                 }
                 Log.d(TAG, "DFP URL :" + updatedGamAdsUrl);
                 initializeAdsLoader(updatedGamAdsUrl);

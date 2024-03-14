@@ -8,6 +8,7 @@
 
 package com.pubmatic.openwrap;
 
+import android.os.Build;
 import android.util.Log;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
@@ -35,60 +36,81 @@ public class POWAdRequest {
     public static final int DEFAULT_REQUEST_TIMEOUT = 5000;
     public static final int DEFAULT_VERSION_ID = 0;
     public static final int DEFAULT_JS_ENABLE_VALUE = 1;
+
+    public static final int DEFAULT_MINADS = 1;
+    public static final int DEFAULT_MAXADS = 3;
+    public static final int DEFAULT_ADMINDURATION = 6;
+    public static final int DEFAULT_ADMAXDURATION = 60;
+
     private static final String TAG = "POWAdRequest";
     // OpenWrap keys
-    private static final String PUB_ID_KEY = "pubId";
-    private static final String PROFILE_ID_KEY = "profId";
-    private static final String AD_UNIT_ID_KEY = "pwtm_iu";
-    private static final String AD_SIZE_KEY = "pwtm_sz";
-    private static final String VERSION_ID_KEY = "pwtv";
-    private static final String DEBUG_KEY = "pwtvc";
-    private static final String AD_FORMAT_KEY = "pwtplt";
+    private static final String PUB_ID_KEY = "app.pub.id";
+    private static final String PROFILE_ID_KEY = "req.ext.wrapper.profileid";
+    private static final String AD_UNIT_ID_KEY = "imp.tagid";
+    private static final String AD_SIZE_W_KEY = "imp.vid.w";
+    private static final String AD_SIZE_H_KEY = "imp.vid.h";
+    private static final String VIDEO_MINDURATION_KEY = "imp.vid.minduration";
+    private static final String VIDEO_MAXDURATION_KEY = "imp.vid.maxduration";
+    private static final String VERSION_ID_KEY = "req.ext.wrapper.versionid";
+    private static final String DEBUG_KEY = "debug";
+    private static final String AD_FORMAT_KEY = "imp.vid.mimes";
     private static final String RESPONSE_FORMAT_KEY = "f";
-    private static final String REQUEST_MIME_KEY = "pwtmime";
+    private static final String REQUEST_MIME_KEY = "imp.vid.mimes";
     private static final String AD_SERVER_KEY = "adserver";
-    private static final String LINEARITY_KEY = "pwtvlin";
+    private static final String LINEARITY_KEY = "imp.vid.linearity";
+    private static final String REQ_TEST_KEY = "req.test";
     // Device Object
-    private static final String LMT_KEY = "pwtlmt";
-    private static final String DNT_KEY = "pwtdnt";
-    private static final String JS_KEY = "pwtjs";
-    private static final String IFA_KEY = "pwtifa";
-    private static final String SHA1_KEY = "pwtdpidsha1";
-    private static final String MD5_KEY = "pwtdpidmd5";
-    private static final String LAT_KEY = "pwtlat";
-    private static final String LON_KEY = "pwtlon";
-    private static final String GEO_TYPE_KEY = "pwtgtype";
-    private static final String COUNTRY_KEY = "pwtcntr";
-    private static final String CITY_KEY = "pwtcity";
-    private static final String METRO_KEY = "pwtmet";
-    private static final String ZIP_KEY = "pwtzip";
-    private static final String UTC_OFFSET_KEY = "pwtuto";
+    private static final String LMT_KEY = "dev.lmt";
+    private static final String DNT_KEY = "dev.dnt";
+    private static final String UA_KEY = "dev.ua";
+    private static final String JS_KEY = "dev.js";
+    private static final String IFA_KEY = "dev.ifa";
+    private static final String SHA1_KEY = "dev.didsha1";
+    private static final String MD5_KEY = "dev.didmd5";
+    private static final String LAT_KEY = "dev.geo.lat";
+    private static final String LON_KEY = "dev.geo.lon";
+    private static final String GEO_TYPE_KEY = "dev.geo.type";
+    private static final String COUNTRY_KEY = "dev.geo.country";
+    private static final String CITY_KEY = "dev.geo.city";
+    private static final String METRO_KEY = "dev.geo.metro";
+    private static final String ZIP_KEY = "dev.geo.zip";
+    private static final String UTC_OFFSET_KEY = "dev.geo.utcoffset";
+    private static final String MAKE_KEY = "dev.make";
+    private static final String MODEL_KEY = "dev.model";
+    private static final String OS_KEY = "dev.os";
+    private static final String OSV_KEY = "dev.osv";
+
     private static final String BIDDER_PARAM_KEY = "pwtbidrprm";
     // User Object
-    private static final String BIRTH_YEAR_KEY = "pwtyob";
-    private static final String GENDER_KEY = "pwtgender";
+    private static final String BIRTH_YEAR_KEY = "user.yob";
+    private static final String GENDER_KEY = "user.gender";
     // App Object
-    private static final String APP_KEY = "pwtapp";
-    private static final String APP_NAME_KEY = "pwtappname";
-    private static final String APP_BUNDLE_KEY = "pwtappbdl";
-    private static final String APP_DOMAIN_KEY = "pwtappdom";
-    private static final String APP_URL_KEY = "pwtm_url";
-    private static final String APP_STORE_URL_KEY = "pwtappurl";
-    private static final String APP_CATEGORY_KEY = "pwtappcat";
-    private static final String APP_PAID_KEY = "pwtapppd";
+    private static final String APP_KEY = "app.id";
+    private static final String APP_NAME_KEY = "app.name";
+    private static final String APP_BUNDLE_KEY = "app.bundle";
+    private static final String APP_DOMAIN_KEY = "app.domain";
+    private static final String APP_URL_KEY = "app.url";
+    private static final String APP_STORE_URL_KEY = "app.storeurl";
+    private static final String APP_CATEGORY_KEY = "app.cat";
+    private static final String APP_PAID_KEY = "app.paid";
     // Extension param
-    private static final String GDPR_KEY = "pwtgdpr";
-    private static final String GDPR_CONSENT_KEY = "pwtcnst";
-    private static final String CCPA_KEY = "pwtccpa";
+    private static final String GDPR_KEY = "regs.ext.gdpr";
+    private static final String GDPR_CONSENT_KEY = "user.consent";
+    private static final String CCPA_KEY = "regs.ext.us_privacy";
+    //AdPod param
+
+    private static final String MINADS = "imp.vid.ext.adpod.minads";
+    private static final String AD_MINDURATION = "imp.vid.ext.adpod.adminduration";
+    private static final String MAXADS = "imp.vid.ext.adpod.maxads";
+    private static final String AD_MAXDURATION = "imp.vid.ext.adpod.admaxduration";
+
     // Default values
     private static final String APP_PARAM_VALUE = "1";
     private static final String AD_FORMAT_VALUE = "video";
     private static final String AD_SERVER_VALUE = "DFP";
     private static final String RESPONSE_FORMAT_VALUE = "json";
-    private static final String REQUEST_MIME_VALUE = "1";
-
-    // OpenWrap Base Url
-    private static final String OW_URL = "https://ow.pubmatic.com/openrtb/2.5/video";
+    private static final String REQUEST_MIME_VALUE = "video/mp4";
+    private static final String OW_URL = "https://ow.pubmatic.com/video/json";
 
     /**
      * OpenWrap Publisher Id
@@ -122,6 +144,22 @@ public class POWAdRequest {
      * Flag to maintain OpenWrap debug mode
      */
     private Boolean debugEnable;
+
+    /**
+     * Flag to maintain OpenWrap test mode
+     */
+    private Boolean testEnable;
+
+
+    private int minAds = DEFAULT_MINADS;
+    private int maxAds = DEFAULT_MAXADS;
+    private int adMinDuration = DEFAULT_ADMINDURATION;
+    private int adMaxDuration = DEFAULT_ADMAXDURATION;
+
+    private int videoMinDuration = DEFAULT_ADMINDURATION;
+    private int videoMaxDuration = DEFAULT_ADMAXDURATION;
+
+    private String userAgent;
 
     /**
      * OpenWrap Profile Version id
@@ -186,7 +224,44 @@ public class POWAdRequest {
     public void setDebugEnable(boolean debugEnable) {
         this.debugEnable = debugEnable;
     }
+    /**
+     * Setter to toggle OpenWrap request test mode
+     *
+     * @param testEnable the boolean value for test mode
+     */
+    public void setTestEnable(boolean testEnable) {
+        this.testEnable = testEnable;
+    }
 
+    public void setAdPodConfig(int minAds, int maxAds, int adMinDuration, int adMaxDuration) {
+        this.minAds = minAds;
+        this.maxAds = maxAds;
+        this.adMinDuration = adMinDuration;
+        this.adMaxDuration = adMaxDuration;
+
+        this.videoMinDuration = adMinDuration;
+        this.videoMaxDuration = adMaxDuration;
+    }
+
+    private void addAdPodData(@NonNull JSONObject requestParamsJson) {
+
+        POWApplicationInfo appInfo = POWConfiguration.getInstance().getAppInfo();
+        if (appInfo != null) {
+            try {
+                requestParamsJson.putOpt(MINADS, minAds);
+                requestParamsJson.putOpt(MAXADS, maxAds);
+                requestParamsJson.putOpt(AD_MINDURATION, adMinDuration);
+                requestParamsJson.putOpt(AD_MAXDURATION, adMaxDuration);
+            } catch (Exception e) {
+                Log.w(TAG, "Error while generating App query json: " + e);
+            }
+
+        }
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
     /**
      * OpenWrap Ad request timeout in milliseconds
      *
@@ -228,11 +303,6 @@ public class POWAdRequest {
         JSONObject requestParamsJson = new JSONObject();
         try {
             POWConfiguration sharedConfiguration = POWConfiguration.getInstance();
-            // Add default request params
-            requestParamsJson.put(APP_KEY, APP_PARAM_VALUE);
-            requestParamsJson.put(AD_FORMAT_KEY, AD_FORMAT_VALUE);
-            requestParamsJson.put(AD_SERVER_KEY, AD_SERVER_VALUE);
-            requestParamsJson.put(RESPONSE_FORMAT_KEY, RESPONSE_FORMAT_VALUE);
 
             /*
              Possible values are:
@@ -258,9 +328,16 @@ public class POWAdRequest {
             if(debugEnable != null) {
                 requestParamsJson.put(DEBUG_KEY, debugEnable ? 1 : 0);
             }
-            if (adSize != null) {
-                requestParamsJson.put(AD_SIZE_KEY, adSize.getFormattedAdSize());
+            if(testEnable != null) {
+                requestParamsJson.put(REQ_TEST_KEY, testEnable ? 1 : 0);
             }
+            if (adSize != null) {
+                requestParamsJson.put(AD_SIZE_W_KEY, adSize.getAdSizeWidth());
+                requestParamsJson.put(AD_SIZE_H_KEY, adSize.getAdSizeHeight());
+            }
+
+            requestParamsJson.put(VIDEO_MINDURATION_KEY, videoMinDuration);
+            requestParamsJson.put(VIDEO_MAXDURATION_KEY, videoMaxDuration);
 
             // Add GDPR flag, if set by publisher.
             if (sharedConfiguration.isEnableGDPR() != null) {
@@ -287,6 +364,8 @@ public class POWAdRequest {
 
             // Add app information parameters to request params
             addApplicationData(requestParamsJson);
+
+            //addAdPodData(requestParamsJson);
 
             // Add bidder parameters
             if (bidderCustomParams != null) {
@@ -341,6 +420,16 @@ public class POWAdRequest {
                             break;
                     }
                 }
+
+                requestParamsJson.put(MAKE_KEY, Build.MANUFACTURER);
+                requestParamsJson.put(MODEL_KEY, Build.MODEL);
+                requestParamsJson.put(OS_KEY, "Android");
+                requestParamsJson.put(OSV_KEY, Build.VERSION.RELEASE);
+
+                if (userAgent != null) {
+                    requestParamsJson.put(UA_KEY, userAgent);
+                }
+
             }
 
             // Send js param as 1.
@@ -405,7 +494,6 @@ public class POWAdRequest {
         if (appInfo != null) {
             try {
                 // Save app store url
-                requestParamsJson.putOpt(APP_URL_KEY, appInfo.getStoreURL());
                 requestParamsJson.putOpt(APP_STORE_URL_KEY, appInfo.getStoreURL());
 
                 // Send app's bundle, name, domain values if provided by user.
@@ -526,5 +614,16 @@ public class POWAdRequest {
         public String getFormattedAdSize() {
             return width + "x" + height;
         }
+
+        @NonNull
+        public int getAdSizeWidth() {
+            return width;
+        }
+
+        @NonNull
+        public int getAdSizeHeight() {
+            return height;
+        }
+
     }
 }
